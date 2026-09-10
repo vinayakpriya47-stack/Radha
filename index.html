@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff7da8">
+<title>A Little Love Story 💗</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --pink: #ff4f8b;
+  --deep: #8e285b;
+  --soft: #fff0f6;
+  --text: #57223d;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 10%, #ffffff 0 2%, transparent 25%),
+    linear-gradient(135deg, #ffd8e7, #fff4f8 48%, #ffc4da);
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible {
+  outline: 3px solid #6e2bff;
+  outline-offset: 4px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Floating background hearts */
+#hearts {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  color: rgba(255, 71, 133, .45);
+  font-size: 22px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  to {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+}
+
+.card {
+  width: min(100%, 520px);
+  text-align: center;
+  padding: 38px 25px 32px;
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: 32px;
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 18px 70px rgba(153, 45, 94, .18);
+  backdrop-filter: blur(14px);
+  animation: appear .8s ease both;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.emoji {
+  font-size: 68px;
+  line-height: 1.2;
+  animation: heartbeat 1.7s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.13); }
+  30% { transform: scale(1); }
+}
+
+h1 {
+  margin: 20px 0 12px;
+  font-size: clamp(30px, 8vw, 46px);
+  line-height: 1.15;
+  color: var(--deep);
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0 auto 25px;
+  max-width: 400px;
+}
+
+.name {
+  color: var(--pink);
+  font-weight: bold;
+}
+
+.question {
+  font-size: clamp(25px, 6vw, 34px);
+  font-weight: bold;
+  margin: 25px 0;
+  color: var(--deep);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  min-height: 65px;
+}
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 15px 30px;
+  font-size: 19px;
+  font-weight: bold;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.yes {
+  background: linear-gradient(135deg, #ff4f8b, #e62d70);
+  color: white;
+  box-shadow: 0 7px 20px rgba(230,45,112,.3);
+}
+
+.no {
+  background: white;
+  color: #ad5378;
+  border: 2px solid #ffc1d6;
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.small-note {
+  font-size: 13px;
+  color: #a05a7c;
+  margin-top: 25px;
+}
+
+/* Music button */
+.music {
+  margin-top: 20px;
+  background: rgba(255,255,255,.85);
+  color: var(--deep);
+  border: 1px solid #ffc3d8;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+/* Celebration */
+.celebration {
+  animation: appear .7s ease both;
+}
+
+.celebration .emoji {
+  font-size: 75px;
+}
+
+.letter {
+  margin-top: 24px;
+  background: rgba(255,255,255,.7);
+  border: 1px solid #ffd1e1;
+  border-radius: 22px;
+  padding: 23px 20px;
+  font-size: 17px;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.letter p {
+  margin: 0 0 13px;
+}
+
+.letter p:last-child {
+  margin-bottom: 0;
+}
+
+.signature {
+  text-align: right;
+  color: var(--pink);
+  font-weight: bold;
+  margin-top: 18px;
+}
+
+.restart {
+  margin-top: 24px;
+  background: transparent;
+  color: #a94a73;
+  border: 1px solid #f5b1cb;
+  border-radius: 999px;
+  padding: 11px 20px;
+  font-size: 14px;
+}
+
+.confetti {
+  position: fixed;
+  top: -20px;
+  z-index: 10;
+  pointer-events: none;
+  animation: confettiFall 3.2s linear forwards;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .card {
+    padding: 30px 19px 26px;
+    border-radius: 25px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .btn {
+    padding: 13px 25px;
+    font-size: 17px;
+  }
+
+  .letter {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="hearts" aria-hidden="true"></div>
+
+<main>
+  <section class="card" id="proposalCard">
+
+    <div class="emoji" aria-hidden="true">💗</div>
+
+    <h1>Hey, My Favorite Person</h1>
+
+    <p class="subtitle">
+      I have a little question for you...
+      <br>
+      And I hope your answer makes my heart smile. 🥹
+    </p>
+
+    <div class="question">
+      Will you be mine? 💍
+    </div>
+
+    <div class="buttons">
+      <button class="btn yes" id="yesBtn">
+        Yes, I will! 💖
+      </button>
+
+      <button class="btn no" id="noBtn">
+        No 🙈
+      </button>
+    </div>
+
+    <button class="music" id="musicBtn" type="button">
+      🎵 Play a little love song
+    </button>
+
+    <p class="small-note">
+      Made with a little courage and a lot of love.
+    </p>
+
+  </section>
+
+  <section class="card celebration hidden" id="successCard">
+
+    <div class="emoji" aria-hidden="true">🥹💖</div>
+
+    <h1>Yayyy! You said YES!</h1>
+
+    <p class="subtitle">
+      You just made my whole world a little more beautiful.
+    </p>
+
+    <div class="letter">
+      <p>My love,</p>
+
+      <p>
+        If I could choose one beautiful moment to keep forever,
+        I would choose the moment you said yes.
+      </p>
+
+      <p>
+        I don't promise that every day will be perfect,
+        but I promise to make the ordinary days special,
+        to laugh with you, stand beside you,
+        and keep choosing you.
+      </p>
+
+      <p>
+        You are my favorite thought in the morning,
+        my sweetest smile in the middle of the day,
+        and the person I want beside me
+        when the stars come out at night.
+      </p>
+
+      <p>
+        So here's to our little love story...
+        and all the beautiful chapters still waiting for us. ❤️
+      </p>
+
+      <p class="signature">
+        Forever yours,<br>
+        With all my heart 💌
+      </p>
+    </div>
+
+    <button class="restart" id="restartBtn">
+      Read it again 🔄
+    </button>
+
+  </section>
+</main>
+
+<script>
+"use strict";
+
+/* =====================================
+   CUSTOMIZE THESE DETAILS
+===================================== */
+
+const HER_NAME = "Garima";       // Example: "Garima"
+const YOUR_NAME = "Gaurav";      // Example: "Gaurav"
+
+/* =====================================
+   PAGE ELEMENTS
+===================================== */
+
+const hearts = document.getElementById("hearts");
+const proposalCard = document.getElementById("proposalCard");
+const successCard = document.getElementById("successCard");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const musicBtn = document.getElementById("musicBtn");
+const restartBtn = document.getElementById("restartBtn");
+
+let noCount = 0;
+let audioContext = null;
+let musicPlaying = false;
+let musicTimer = null;
+
+/* Add her name and your name if supplied. */
+if (HER_NAME.trim()) {
+  document.querySelector("h1").textContent =
+    "Hey, " + HER_NAME + " 💗";
+}
+
+if (YOUR_NAME.trim()) {
+  document.querySelector(".signature").innerHTML =
+    "Forever yours,<br>" + YOUR_NAME + " 💌";
+}
+
+/* =====================================
+   FLOATING HEARTS
+===================================== */
+
+const heartSymbols = ["💗", "💕", "💖", "♡", "♥", "✨"];
+
+function createHeart() {
+  const heart = document.createElement("span");
+  heart.className = "heart";
+  heart.textContent =
+    heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+
+  heart.style.left = Math.random() * 100 + "%";
+  heart.style.fontSize = (14 + Math.random() * 24) + "px";
+  heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+
+  hearts.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 12000);
+}
+
+for (let i = 0; i < 15; i++) {
+  setTimeout(createHeart, i * 350);
+}
+
+setInterval(createHeart, 800);
+
+/* =====================================
+   NO BUTTON PLAYFUL ACTION
+===================================== */
+
+const noMessages = [
+  "Are you sure? 🥺",
+  "Think again! 💗",
+  "My heart is waiting... 🥹",
+  "Please? Just one yes? 🙈",
+  "You can't escape love! 😂",
+  "Try the other button 💖"
+];
+
+function moveNoButton() {
+  noCount++;
+
+  noBtn.textContent =
+    noMessages[Math.min(noCount - 1, noMessages.length - 1)];
+
+  if (noCount >= 2) {
+    const maxX = Math.max(0, Math.min(100, window.innerWidth - 160));
+    const x = Math.random() * maxX - maxX / 2;
+    const y = (Math.random() * 70) - 35;
+
+    noBtn.style.transform =
+      "translate(" + x + "px, " + y + "px)";
+  }
+
+  if (noCount >= 5) {
+    noBtn.textContent = "Okay, click Yes 😭💗";
+  }
+}
+
+noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("touchstart", function(event) {
+  if (noCount < 3) {
+    event.preventDefault();
+    moveNoButton();
+  }
+}, { passive: false });
+
+noBtn.addEventListener("click", function() {
+  if (noCount < 3) {
+    moveNoButton();
+  } else {
+    yesBtn.focus();
+  }
+});
+
+/* =====================================
+   YES BUTTON + CELEBRATION
+===================================== */
+
+yesBtn.addEventListener("click", function() {
+  proposalCard.classList.add("hidden");
+  successCard.classList.remove("hidden");
+
+  launchConfetti();
+
+  if (musicPlaying) {
+    stopMusic();
+  }
+});
+
+/* =====================================
+   CONFETTI
+===================================== */
+
+function launchConfetti() {
+  const symbols = ["💖", "💕", "✨", "🌸", "💗", "🎉"];
+
+  for (let i = 0; i < 45; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti";
+    piece.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.fontSize = (14 + Math.random() * 18) + "px";
+    piece.style.animationDelay = Math.random() * 1.2 + "s";
+    piece.style.animationDuration = (2.5 + Math.random() * 2) + "s";
+
+    document.body.appendChild(piece);
+
+    setTimeout(() => piece.remove(), 5500);
+  }
+}
+
+/* =====================================
+   RESTART
+===================================== */
+
+restartBtn.addEventListener("click", function() {
+  successCard.classList.add("hidden");
+  proposalCard.classList.remove("hidden");
+
+  noCount = 0;
+  noBtn.textContent = "No 🙈";
+  noBtn.style.transform = "";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+/* =====================================
+   BUILT-IN ROMANTIC MELODY
+   No external audio files needed.
+===================================== */
+
+const melody = [
+  [261.63, .32], [329.63, .32], [392.00, .45],
+  [329.63, .32], [293.66, .32], [329.63, .45],
+  [261.63, .32], [329.63, .32], [440.00, .45],
+  [392.00, .32], [329.63, .32], [293.66, .55]
+];
+
+function playNote(freq, duration, startTime) {
+  if (!audioContext) return;
+
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.type = "sine";
+  oscillator.frequency.setValueAtTime(freq, startTime);
+
+  gain.gain.setValueAtTime(0.0001, startTime);
+  gain.gain.exponentialRampToValueAtTime(
+    0.12, startTime + 0.03
+  );
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001, startTime + duration
+  );
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start(startTime);
+  oscillator.stop(startTime + duration + 0.05);
+}
+
+function startMusic() {
+  const AudioCtx =
+    window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioCtx) {
+    musicBtn.textContent = "Your browser does not support music";
+    return;
+  }
+
+  if (!audioContext) {
+    audioContext = new AudioCtx();
+  }
+
+  if (audioContext.state === "suspended") {
+    audioContext.resume();
+  }
+
+  musicPlaying = true;
+  musicBtn.textContent = "🔇 Stop love song";
+
+  let index = 0;
+
+  function playLoop() {
+    if (!musicPlaying) return;
+
+    const start = audioContext.currentTime + 0.05;
+
+    melody.forEach((note, i) => {
+      playNote(
+        note[0],
+        note[1],
+        start + i * 0.38
+      );
+    });
+
+    musicTimer = setTimeout(playLoop, 4600);
+  }
+
+  playLoop();
+}
+
+function stopMusic() {
+  musicPlaying = false;
+  clearTimeout(musicTimer);
+  musicTimer = null;
+
+  musicBtn.textContent = "🎵 Play a little love song";
+}
+
+musicBtn.addEventListener("click", function() {
+  if (musicPlaying) {
+    stopMusic();
+  } else {
+    startMusic();
+  }
+});
+</script>
+
+</body>
+</html>
